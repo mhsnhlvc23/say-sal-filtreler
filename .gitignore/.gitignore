@@ -1,0 +1,186 @@
+
+
+1) function mybessel(wa wp Ap Aa)
+% [num,den]=mybessel(wa wp Ap Aa)
+% mybessel Fonksiyonu MATLAB üzerinde;
+% sürekli zamanlı filtreyi en düsük dereceli olacak sekilde
+% Bessel filtrenin transfer fonksiyonunu hesaplar
+%numara 140507046
+%final sınavı 1.soru cevabı
+%Mahsun Helvaci
+%02.01.2018
+
+
+wp=2.5;    
+wa=4;
+Ap=1.2;
+Aa=45;
+T=(2*pi)/(wa+wp);
+n1=(log(10^(0.1*Ap)-1))\(2*log(wp));   
+n2=(log(10^(0.1*Aa)-1))/(2*log(wa));  
+n3=max(n1,n2);   
+n=ceil(n3);   
+num=[1];    
+ 
+den=1;      
+ 
+for ii=1:n  
+   w=exp(j*(pi+4*ii*pi)/(2*n));   
+   w1=(w-2/(T*T)); 
+ 
+ if(real(w)<=0)   
+ den=conv (den, [1  -w]);   
+ den=conv (den, [1  -conj(w)]);
+ 
+
+ end   
+end
+ den;
+A=tf(num,den);
+
+
+n1 = - 1.6007
+n2 = 3.7372
+n3 = 3.7372
+ans =  4
+w = 0.9238 + 0.3826i
+w1=-1.2165 + 0.3826i
+num = 1
+den = 1.0000    2.6131    3.4142    2.6131    1.0000
+2)
+function HS=final2(B0,w0);
+%numara 140507046
+%final sınavı 2.soru cevabı
+%Mahsun Helvaci
+%02.01.2018
+%3.dereceden olan liptik filtrenin agf'den bgf'ye dönüştürme fonksiyonu
+
+
+ 
+double B0;
+double w0;
+syms s t  
+s=(t+(w0)*(w0)/t)/B0;
+num=(0.067*s^2 + 0.1802);
+den=(s^3 + 0.677*s^2 + 0.5985*s + 0.1804);
+HS=num/den
+end
+
+final2(B0, w0)
+ 
+HS =
+ 
+((67*((2199023255552*t)/2537167061558231 + 4947802324992000000/(2537167061558231*t))^2)/1000 + 901/5000)/((164514427305984*t)/317145882694778875 + (677*((2199023255552*t)/2537167061558231 + 4947802324992000000/(2537167061558231*t))^2)/1000 + ((2199023255552*t)/2537167061558231 + 4947802324992000000/(2537167061558231*t))^3 + 2961259691507712000/(2537167061558231*t) + 451/2500)
+ 
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3)
+function mybessel2(wa wp Ap Aa)
+%numara 140507046
+%final sınavı 3.soru cevabı
+%N:pencerenin uzunluğu 
+%Mahsun Helvaci
+%02.01.2018
+%bu fonksiyon verilen H(s) filtresini çift lineer yaklaşımı özelliğini
+%kullanarak sayısal filtreye dönüştürür.
+
+wp=2.5;    
+wa=4;
+Ap=1.2;
+Aa=45;
+T=(2*pi)/(wa+wp);
+n1=(log(10^(0.1*Ap)-1))\(2*log(wp));   
+n2=(log(10^(0.1*Aa)-1))/(2*log(wa));  
+n3=max(n1,n2);   
+n=ceil(n3);   
+num=[1];    yeninum=[1];   
+ 
+den=1;      yeniden=1;     
+ 
+for ii=1:n  
+   w=exp(j*(pi+4*ii*pi)/(2*n));   
+   w1=(w-2/(T*T)); 
+ 
+ if(real(w)<=0)   
+ den=conv (den, [1  -w]);   
+ den=conv (den, [1  -conj(w)]);
+ 
+yeniden=conv (yeniden, [1  -w1]);   
+ yeniden=conv (yeniden, [1  -conj(w1)]);
+ 
+ end   
+end
+ den;
+A=tf(num,den);
+yeniA=tf(yeninum,yeniden);
+
+n1 = - 1.6007
+n2 = 3.7372
+n3 = 3.7372
+n =  4
+w = 0.9238 + 0.3826i
+w1=-1.2165 + 0.3826i
+yeniden=
+[1.000000000000000 + 0.000000000000000i 11.174765947530297 + 0.000000000000000i 47.681826133874280 + 0.000000000000000i 92.367644386378430 + 0.000000000000000i 68.847954236808830 + 0.000000000000000i]
+yeninum=1
+
+4) function [dnum,dden]=myAnalog2Digi(dnum,dden,ws)
+ %bu fonksiyon verilen H(s) filtresini dürtü değişmezlik özelliğini
+ %kullanarak sayısal filtreye dönüştürür.ws radyan cinsinden
+ %örnekleme frekansı iken nums,ve den sırası ile pay ve payda
+ %polinom katsayılarıdır.
+  %numara 140507046
+ %final sınavı 4.soru cevabı
+ %Mahsun Helvacı
+ %02.01.2018
+ws=35;
+ws=35;
+T=2*pi/ws;
+rnum=0;
+rden=1*T;
+dnum=[5.033e-08 0.4067 2.548e05];
+dden=[6.511e-10 5.086e-07 0.004914 2.469 1.106e04 2.575e06 7.416e09];
+[r,p,k]=residue(anum,aden)
+lr=length(r);
+for ii=1:lr;
+    rnum=conv(rnum,[1 -1*exp(T*p(ii))])+conv(rden,[r(ii) 0]);
+    rden=conv(rden,[1 -1*exp(T*p(ii))]);
+    
+end
+ tf(rnum,rden)
+end
+
+
+                                                                              
+
+
+
